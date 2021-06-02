@@ -1,7 +1,7 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import Diagram, { createSchema, useSchema } from 'beautiful-react-diagrams';
 import { Button } from 'beautiful-react-ui';
-import css from './styles.module.css';
+import './styles.css';
 
 const initialSchema = createSchema({
   nodes: [],
@@ -11,13 +11,7 @@ const initialSchema = createSchema({
 const CustomRender = ({ id, content, data, inputs, outputs }) => (
   <div style={{ background: 'purple', width: '100px' }}>
     <div style={{ textAlign: 'right' }}>
-      <Button
-        id={id}
-        icon="times"
-        size="small"
-        className={css.btn}
-        onClick={(e) => console.log(e.target)}
-      />
+      <Button id={id} icon="times" size="small" className="btn" />
     </div>
     <div role="button" style={{ padding: '15px' }}>
       {content}
@@ -31,12 +25,7 @@ const CustomRender = ({ id, content, data, inputs, outputs }) => (
     >
       {inputs.map((port) =>
         React.cloneElement(port, {
-          style: { width: '25px', height: '25px', background: '#1B263B' },
-        })
-      )}
-      {outputs.map((port, index) =>
-        React.cloneElement(port, {
-          style: { width: '25px', height: '25px', background: '#1B263B' },
+          style: { width: '5px', height: '5px', background: '#1B263B' },
         })
       )}
     </div>
@@ -69,16 +58,31 @@ export default function App() {
 
   const [schema, { onChange }] = useSchema(initialSchema);
 
+  useEffect(() => {
+    console.log('useEffect');
+    let newlinks = schema.links;
+    onChange({ ...schema, links: newlinks });
+    console.log(schema);
+  }, [schema.links, onChange]);
+
   const deleteNodeFromSchema = (id) => {
-    console.log(id);
     if (id === undefined || id.length === 0) return;
 
     const nodeToRemove = schema.nodes.find((node) => node.id === id);
     if (nodeToRemove === undefined) return;
 
-    const arr = [...nodeToRemove.inputs, ...nodeToRemove.outputs].map(
-      (obj) => obj.id
-    );
+    const temp = tables.find((table) => table.title === nodeToRemove.content);
+
+    if (temp.visible === true) return;
+
+    let newTables = tables.map((table) => {
+      if (table.title === nodeToRemove.content) {
+        table.visible = true;
+      }
+      return table;
+    });
+
+    const arr = nodeToRemove.inputs.map((obj) => obj.id);
     let links = schema.links.filter(
       (obj) =>
         arr.includes(obj.input) === false && arr.includes(obj.output) === false
@@ -86,10 +90,11 @@ export default function App() {
 
     let nodes = schema.nodes.filter((node) => node.id !== id);
 
-    // console.log(nodes, links);
-
     onChange({ nodes, links });
+
+    setTables(newTables);
   };
+
   const addNewNode = (title) => {
     const nextNode = {
       id: `Id:${title}`,
@@ -98,7 +103,7 @@ export default function App() {
       render: CustomRender,
       data: { onClick: deleteNodeFromSchema },
       inputs: [{ id: `${Math.random()}` }],
-      outputs: [{ id: `${Math.random()}` }],
+      // outputs: [{ id: `${Math.random()}` }],
     };
     let nodes = schema.nodes;
     nodes.push(nextNode);
@@ -108,18 +113,20 @@ export default function App() {
   let tableTitles = tables.map((table) => {
     if (table.visible === true)
       return (
-        <div id={table.title} className={css.true}>
+        <div id={table.title} className="true">
           {table.title}
         </div>
       );
     return (
-      <div id={table.title} className={css.false}>
+      <div id={table.title} className="false">
         {table.title}
       </div>
     );
   });
   const handleClick = (tableTitle) => {
-    console.log(tableTitle);
+    let newTable = tables.find((table) => tableTitle === table.title);
+    if (!newTable || newTable.visible === false) return;
+
     const newTables = tables.map((table) => {
       if (table.title === tableTitle) {
         table.visible = false;
@@ -131,15 +138,11 @@ export default function App() {
   };
 
   return (
-    <div className={css.App} onClick={(e) => deleteNodeFromSchema(e.target.id)}>
-      {/* <Button color="primary" icon="plus" onClick={addNewNode}>
-        Add new node
-      </Button> */}
+    <div className="App" onClick={(e) => deleteNodeFromSchema(e.target.id)}>
       <div
-        className={css.tableTitles}
+        className="tableTitles"
         onClick={(e) => {
           e.stopPropagation();
-          console.log(e.target.classList);
           handleClick(e.target.id);
         }}
       >
@@ -148,7 +151,7 @@ export default function App() {
         </div>
         <div>{tableTitles}</div>
       </div>
-      <div className={css.diagram}>
+      <div className="diagram">
         <Diagram schema={schema} onChange={onChange} />
       </div>
     </div>

@@ -1,0 +1,133 @@
+.App {
+  font-family: sans-serif;
+  text-align: center;
+  text-align: center;
+  display: flex;
+}
+
+.btn > * {
+  pointer-events: none;
+}
+
+.diagram {
+  height: 100vh;
+  width: 70%;
+}
+
+.tableTitles {
+  height: 100vh;
+  width: 30%;
+  background-color: #203647;
+}
+
+.true {
+  background-color: #364a59;
+  margin: 5px;
+  padding: 5px;
+  color: #eefbfb;
+}
+.false {
+  background-color: #eee;
+  margin: 5px;
+  padding: 5px;
+  color: grey;
+  cursor: not-allowed;
+}
+
+.bi.bi-diagram .bi-link-canvas-layer .bi-diagram-link .bi-link-path {
+  stroke: #88cdff;
+  stroke-dasharray: 10, 2;
+  animation: BiDashSegmentAnimation 1s linear infinite;
+}
+
+.bi.bi-diagram .bi-link-canvas-layer .bi-diagram-link:hover .bi-link-path {
+  stroke: #88cdff;
+  stroke-dasharray: 10, 2;
+  animation: BiDashSegmentAnimation 1s linear infinite;
+}
+
+/* /////////////// */
+
+/* .bi.bi-diagram .bi-link-canvas-layer .bi-diagram-link {
+  pointer-events: stroke;
+}
+.bi.bi-diagram .bi-link-canvas-layer .bi-diagram-link .bi-link-path {
+  stroke: red;
+  stroke-width: 0.25rem;
+  pointer-events: stroke;
+  fill: transparent;
+  cursor: pointer;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+.bi.bi-diagram .bi-link-canvas-layer .bi-diagram-link .bi-link-ghost {
+  pointer-events: stroke;
+  stroke: transparent;
+  stroke-width: 1.2rem;
+  fill: transparent;
+  cursor: pointer;
+}
+.bi.bi-diagram .bi-link-canvas-layer .bi-diagram-link .bi-link-path {
+  stroke: red;
+  stroke-dasharray: 10, 2;
+  animation: BiDashSegmentAnimation 1s linear infinite;
+}
+.bi.bi-diagram
+  .bi-link-canvas-layer
+  .bi-diagram-link.readonly-link
+  .bi-link-ghost {
+  cursor: not-allowed;
+}
+.bi.bi-diagram
+  .bi-link-canvas-layer
+  .bi-diagram-link.readonly-link
+  .bi-link-path {
+  cursor: not-allowed;
+  stroke: red;
+  stroke-dasharray: none;
+}
+
+.bi.bi-diagram .bi-link-canvas-layer .bi-diagram-link foreignObject {
+  width: 100%;
+  height: 100%;
+  overflow: visible;
+  pointer-events: none;
+}
+.bi.bi-diagram .bi-link-canvas-layer .bi-diagram-link .bi-diagram-link-label {
+  display: inline-block;
+  color: #fff;
+  background-color: #3d4852;
+  border-radius: 0.25rem;
+  padding: 0.25rem;
+  text-align: center;
+  font-size: 14px;
+  font-size: 0.875rem;
+  -webkit-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+  min-width: 48px;
+  min-width: 3rem;
+  transform: translate(-50%, -50%);
+}
+@keyframes BiDashSegmentAnimation {
+  0% {
+    stroke-dashoffset: 24;
+  }
+  to {
+    stroke-dashoffset: 0;
+  }
+}
+
+.bi.bi-diagram
+  .bi-link-canvas-layer
+  .bi-diagram-link.readonly-link.completed-link
+  .bi-link-path {
+  stroke: red;
+}
+
+.bi.bi-diagram .bi-link-canvas-layer .bi-diagram-link.readonly-link {
+  stroke: red;
+  stroke-dasharray: none;
+  animation: none;
+} */
